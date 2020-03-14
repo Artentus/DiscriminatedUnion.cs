@@ -3,34 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DUcs
 {
-    public static class Result
-    {
-        /// <summary>
-        /// Continues this result with another operation using a two-track model.
-        /// </summary>
-        public static T Bind<T, TFailure, TSuccess>(this T current, Func<TSuccess, T> next)
-            where T : Result<TFailure, TSuccess>
-            where TFailure : notnull
-            where TSuccess : notnull
-        {
-            return current.Match(
-                fail => current,
-                succ => next.Invoke(succ));
-        }
-
-        /// <summary>
-        /// Continues this result with another operation using a two-track model.
-        /// </summary>
-        public static T Bind<T, TSuccess>(this T current, Func<TSuccess, T> next)
-            where T : Result<TSuccess>
-            where TSuccess : notnull
-        {
-            return current.Match(
-                fail => current,
-                succ => next.Invoke(succ));
-        }
-    }
-
     /// <summary>
     /// A choice between either a failure or a success.
     /// </summary>

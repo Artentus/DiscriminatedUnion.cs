@@ -1,5 +1,4 @@
-﻿using DUcs;
-using System;
+﻿using System;
 
 namespace Example
 {
@@ -89,7 +88,7 @@ namespace Example
             CheckoutResult checkoutWithValidCard(CheckoutSuccess success)
                 => CheckoutResult.Success("with " + success.Message + " for " + amount.ToString("#.00") + "$");
 
-            return result.Bind<CheckoutResult, CheckoutSuccess>(checkoutWithValidCard);
+            return result.Match(() => CheckoutResult.StaticFailure, succ => checkoutWithValidCard(succ));
         }
 
         private static CheckoutResult Checkout(Payment payment)
